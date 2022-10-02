@@ -1,0 +1,61 @@
+#np Shell32(ShellExecuteExW)
+#np user32(MessageBoxW)
+#np Advapi32(ConvertSidToStringSidW, GetTokenInformation, IsValidSid, OpenSCManagerA, CreateServiceA, CloseServiceHandle)
+
+#* VARIABLES
+ROOT_DIR=D:/D/my/tech/RAT/makeSolution/crypter
+REM=D:\D\my\tech\RAT\makeSolution\tools\rm\rm.exe
+
+C=clang
+CXX=clang++
+CXX_STD=--std=c++17
+OPT=-Ofast
+INCDIR=-I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/
+LIBS=-lShell32
+
+CODE_DIRS=./src ./src/rsrc ./src/sourcefiles/*
+BUILD=release
+BINARY=build/${BUILD}/main
+
+CFILES=$(foreach D, $(CODE_DIRS), $(wildcard $(D)/*.c))
+CPPFILES=$(foreach D, $(CODE_DIRS), $(wildcard $(D)/*.cpp))
+ASMFILES=$(foreach D, $(CODE_DIRS), $(wildcard $(D)/*.asm))
+RSRCFILES=$(foreach D, ${CODE_DIRS}, $(wildcard $(D)/*.rc))
+
+OBJFILES=$(patsubst %,%.o,$(CFILES) $(CPPFILES) $(RSRCFILES) $(ASMFILES))
+OUTPUT_FILES=${BINARY}.exe ${BINARY}.ilk ${BINARY}.pdb ${OBJFILES}
+
+#* RUN RELEASE
+pe: ${BINARY}.exe
+
+#* RUN DEBUG
+dbg:
+	make pe dbg_flag=-g BUILD=debug
+
+#*======================= LINKING
+${BINARY}.exe:${OBJFILES} 
+	${CXX} -v ${INCDIR} $(dbg_flag) ${OBJFILES} ${OPT} -o $@ ${LIBS}
+
+#*======================= COMPILING SRC_CODE
+%.c.o:%.c
+	${C} -c ${INCDIR} ${OPT} $(dbg_flag) $< -o $@
+%.cpp.o:%.cpp
+	${CXX} ${INCDIR} ${CXX_STD} $(dbg_flag) -c ${OPT} -o $@ $^
+%.asm.o:%.asm
+	ml64.exe /c /nologo /Zi /Fo $@ /W3 /errorReport:prompt  /Ta $^
+%.rc.o:%.rc
+	windres -o $@ $^
+
+#*======================= RUN RELEASE
+run: pe
+	${ROOT_DIR}/build/release/main.exe
+
+#*======================= CLEANING
+delOldRsrc:
+	${REM} -rf ${ROOT_DIR}/src/rsrc/resource.rc.o
+
+clean:
+	make rmFiles BUILD=debug
+	make rmFiles BUILD=release
+rmFiles:
+	${REM} -rf ${OUTPUT_FILES}

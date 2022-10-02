@@ -1,0 +1,53 @@
+#np Shell32(ShellExecuteExW)
+#np user32(MessageBoxW)
+#np Advapi32(ConvertSidToStringSidW, GetTokenInformation, IsValidSid, OpenSCManagerA, CreateServiceA, CloseServiceHandle)
+
+#* VARIABLES
+ROOT_DIR=D:/D/my/tech/RAT/makeSolution/babySteps
+REM=D:\D\my\tech\RAT\makeSolution\tools\rm\rm.exe
+
+C=clang
+CXX=clang++
+CXX_STD=--std=c++17
+OPT=-Ofast
+INCDIR=
+LIBS=
+
+CODE_DIRS=./src ./src/sourcefiles/*
+BUILD=release
+BINARY=build/${BUILD}/main
+
+CPPFILES=$(foreach D, $(CODE_DIRS), $(wildcard $(D)/*.cpp))
+ASMFILES=$(foreach D, $(CODE_DIRS), $(wildcard $(D)/*.asm))
+
+OBJFILES=$(patsubst %, %.o, $(CPPFILES) $(ASMFILES))
+OUTPUT_FILES=${BINARY}.exe ${BINARY}.ilk ${BINARY}.pdb ${OBJFILES}
+
+#* BUILD RELEASE
+pe: ${BINARY}.exe
+
+#* BUILD DEBUG
+dbg:
+	make pe dbg_flag=-g BUILD=debug
+
+#*======================= LINKING
+${BINARY}.exe:${OBJFILES} 
+	${CXX} -v ${INCDIR} $(dbg_flag) ${OBJFILES} ${OPT} -o $@ ${LIBS}
+
+#*======================= COMPILING SRC_CODE
+%.cpp.o:%.cpp
+	${CXX} ${INCDIR} ${CXX_STD} $(dbg_flag) -c ${OPT} -o $@ $^
+%.asm.o:%.asm
+	ml64.exe /c /nologo /Zi /Fo $@ /W3 /errorReport:prompt  /Ta $^
+
+
+#*======================= RUN RELEASE
+run: pe
+	${ROOT_DIR}/build/release/main.exe
+
+#*======================= CLEANING
+clean:
+	make rmFiles BUILD=debug
+	make rmFiles BUILD=release
+rmFiles:
+	${REM} -rf ${OUTPUT_FILES}

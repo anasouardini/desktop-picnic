@@ -1,0 +1,5 @@
+all:
+	clang++ -g -c main.cpp -o main.o
+	ml64.exe /c /nologo /Zi /Fo modifyFunc.o /W3 /errorReport:prompt  /Ta modifyFunc.asm
+	clang++ -v -g main.o modifyFunc.o -o build/debug/main.exe
+	./build/debug/main.exe

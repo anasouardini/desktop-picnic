@@ -1,0 +1,50 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make.exe: Entering directory `d:/D/my/tech/RAT/makeSolution/crypter'
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/syscalls/syscalls_all.c -o src/sourcefiles/syscalls/syscalls_all.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/adler32.c -o src/sourcefiles/zlib/adler32.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/compress.c -o src/sourcefiles/zlib/compress.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/crc32.c -o src/sourcefiles/zlib/crc32.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/deflate.c -o src/sourcefiles/zlib/deflate.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/gzclose.c -o src/sourcefiles/zlib/gzclose.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/gzlib.c -o src/sourcefiles/zlib/gzlib.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/gzread.c -o src/sourcefiles/zlib/gzread.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/gzwrite.c -o src/sourcefiles/zlib/gzwrite.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/infback.c -o src/sourcefiles/zlib/infback.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/inffast.c -o src/sourcefiles/zlib/inffast.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/inflate.c -o src/sourcefiles/zlib/inflate.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/inftrees.c -o src/sourcefiles/zlib/inftrees.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/trees.c -o src/sourcefiles/zlib/trees.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/uncompr.c -o src/sourcefiles/zlib/uncompr.c.o
+ 
+clang -c -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ -Ofast  src/sourcefiles/zlib/zutil.c -o src/sourcefiles/zlib/zutil.c.o
+ 
+clang++ -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/ --std=c++17  -c -Ofast -o src/main.cpp.o src/main.cpp
+ 
+make.exe: Circular src/rsrc/resource.rc <- src/rsrc/resource.rc.o dependency dropped.
+
+cc      -o src/rsrc/resource.rc
+windres -o src/rsrc/resource.rc.o src/rsrc/resource.rc
+ 
+make.exe: Circular src/sourcefiles/syscalls/syscalls_all_stubs.asm <- src/sourcefiles/syscalls/syscalls_all_stubs.asm.o dependency dropped.
+
+cc      -o src/sourcefiles/syscalls/syscalls_all_stubs.asm
+ml64.exe /c /nologo /Zi /Fo src/sourcefiles/syscalls/syscalls_all_stubs.asm.o /W3 /errorReport:prompt  /Ta src/sourcefiles/syscalls/syscalls_all_stubs.asm
+ 
+clang++ -v -I D:/D/my/tech/RAT/makeSolution/crypter/src/sourcefiles/zlib/  ./src/sourcefiles/syscalls/syscalls_all.c.o ./src/sourcefiles/zlib/adler32.c.o ./src/sourcefiles/zlib/compress.c.o ./src/sourcefiles/zlib/crc32.c.o ./src/sourcefiles/zlib/deflate.c.o ./src/sourcefiles/zlib/gzclose.c.o ./src/sourcefiles/zlib/gzlib.c.o ./src/sourcefiles/zlib/gzread.c.o ./src/sourcefiles/zlib/gzwrite.c.o ./src/sourcefiles/zlib/infback.c.o ./src/sourcefiles/zlib/inffast.c.o ./src/sourcefiles/zlib/inflate.c.o ./src/sourcefiles/zlib/inftrees.c.o ./src/sourcefiles/zlib/trees.c.o ./src/sourcefiles/zlib/uncompr.c.o ./src/sourcefiles/zlib/zutil.c.o ./src/main.cpp.o ./src/rsrc/resource.rc.o ./src/sourcefiles/syscalls/syscalls_all_stubs.asm.o -Ofast -o build/release/main.exe -lShell32
+ 
+make.exe: Leaving directory `d:/D/my/tech/RAT/makeSolution/crypter'
+ 

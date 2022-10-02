@@ -1,0 +1,6 @@
+all:
+	clang++ -ofast -c main.cpp -o main.o
+	clang++ -ofast  main.o -o target.exe
+
+run: all
+	./target.exe
